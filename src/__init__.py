@@ -17,12 +17,11 @@ scheduler = APScheduler()
 sockets = Sockets()
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app_src = basedir.split('\\')[-1]
+app_src = 'src'
 
 
 def register_extensions(app):
     sockets.init_app(app)
-
     app.config['BLUEPRINTS'] = []
     app.config['CONNECTIONS'] = {}
     app.config['NICK_NAMES'] = {}

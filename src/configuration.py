@@ -42,9 +42,9 @@ CONFIGS = {
 
 class Credenciais:
     POSTGRESQL = ("DRIVER={PostgreSQL Unicode(x64)};"
-                  "DATABASE=tsempreendimento;"
+                  "DATABASE=tsfinance;"
                   "UID=postgres;"
-                  f"PWD=solution;"
+                  "PWD=solution;"
                   "SERVER=localhost;"
                   "PORT=5434;")
 
