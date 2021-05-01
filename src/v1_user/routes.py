@@ -8,13 +8,14 @@ app = current_app
 
 @blueprint.route('/status')
 def status():
-    print('[GET] /auth/status')
+    print('[GET] /user/status')
     return f'<h1>Servidor ({blueprint.name}) ativo!</h1>'
 
 
 @blueprint.route('/login', methods=['POST'])
 @authorization_key
 def login():
+    print('[POST] /user/login')
     params = request.get_json()
     return User().login(params)
 
@@ -22,6 +23,7 @@ def login():
 @blueprint.route('/', methods=['POST'])
 @authorization_key
 def insert():
+    print('[POST] /user')
     params = request.get_json()
     return User().insert(params)
 
@@ -31,6 +33,7 @@ def insert():
 @authorization_jwt
 @authorization_user
 def update():
+    print('[PUT] /user')
     params = request.get_json()
     return User().update(user=params)
 
@@ -40,6 +43,7 @@ def update():
 @authorization_jwt
 @authorization_user
 def delete(codigo):
+    print(f'[DELETE] /user/{codigo}')
     params = request.get_json()
     return User().delete(codigo=codigo)
 
@@ -49,6 +53,7 @@ def delete(codigo):
 @authorization_jwt
 @authorization_user
 def delete(active, codigo):
+    print(f'[PATH] /user/{active}/{codigo}')
     params = request.get_json()
     return User().active(active=active, codigo=codigo)
 
@@ -56,6 +61,7 @@ def delete(active, codigo):
 @blueprint.route('/refresh-token', methods=['POST'])
 @authorization_key
 def refresh_token():
+    print(f'[POST] /user/refresh-token')
     params = request.get_json()
     return User().refresh_token(params)
 
