@@ -8,6 +8,7 @@ app = current_app
 
 @blueprint.route('/status')
 def status():
+    print('[GET] /auth/status')
     return f'<h1>Servidor ({blueprint.name}) ativo!</h1>'
 
 
