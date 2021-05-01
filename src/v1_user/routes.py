@@ -25,6 +25,7 @@ def login():
 def insert():
     print('[POST] /user')
     params = request.get_json()
+    print(params)
     return User().insert(params)
 
 
