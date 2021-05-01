@@ -88,4 +88,5 @@ class UserDAO(Database):
               , sn_ativo as active
             FROM public."CAD_USUARIO" WHERE ds_email = '{email}'
         """)
+        print(query)
         return self.exec_query(query)
