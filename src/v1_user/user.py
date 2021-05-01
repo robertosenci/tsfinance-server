@@ -9,6 +9,7 @@ class User:
         pass
 
     def insert(self, user):
+        print('chegou')
         dao = UserDAO()
         if user:
             if dao.get_by_cpf(cpf=user.get('cpf')):
