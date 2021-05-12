@@ -81,8 +81,8 @@ class User:
             "id": usuario,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }
-        token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
-        return token.decode('UTF-8')
+        token = jwt.encode(payload, current_app.config['SECRET_KEY'])
+        return token
 
     def auth_refresh(self, usuario, token):
         payload = {
@@ -91,7 +91,7 @@ class User:
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=30)
         }
         token = jwt.encode(payload, current_app.config['SECRET_KEY'])
-        return token.decode('UTF-8')
+        return token
 
     def refresh_token(self, params):
         xtoken = str(params.get('refresh-token')).replace("Bearer", "").strip()
