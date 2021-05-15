@@ -20,7 +20,7 @@ def login():
     return User().login(params)
 
 
-@blueprint.route('/', methods=['POST'])
+@blueprint.route('', methods=['POST'])
 @authorization_key
 def insert():
     print('[POST] /user')
@@ -29,7 +29,7 @@ def insert():
     return User().insert(params)
 
 
-@blueprint.route('/', methods=['PUT'])
+@blueprint.route('', methods=['PUT'])
 @authorization_key
 @authorization_jwt
 @authorization_user
@@ -57,6 +57,15 @@ def delete(active, codigo):
     print(f'[PATH] /user/{active}/{codigo}')
     params = request.get_json()
     return User().active(active=active, codigo=codigo)
+
+
+@blueprint.route('/me', methods=['GET'])
+@authorization_key
+@authorization_jwt
+def get_me(current_user):
+    print(f'[GET] /me')
+    print(current_user)
+    return User().delete(codigo=1)
 
 
 @blueprint.route('/refresh-token', methods=['POST'])
