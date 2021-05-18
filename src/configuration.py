@@ -45,7 +45,7 @@ class Credenciais:
                   "DATABASE=tsfinance;"
                   "UID=postgres;"
                   "PWD=solution;"
-                  "SERVER=postgres;"
+                  "SERVER=cashts-postgres;"
                   "PORT=5432;")
 
 
