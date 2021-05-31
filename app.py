@@ -16,7 +16,7 @@ if __name__ == '__main__':
     SERVER_NAME = app.config['COMPUTER_NAME']
     SERVER_IP = app.config['COMPUTER_IP']
     ROUTE_IP = SERVER_IP
-    SERVER_PORT = 6003
+    SERVER_PORT = 6004
 
     firstevent = 1
     SERVER_PORT = os.environ.get(f"{app_name}_PORT", SERVER_PORT)

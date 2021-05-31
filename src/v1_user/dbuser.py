@@ -51,7 +51,7 @@ class UserDAO(Database):
 
     def delete(self, codigo):
         query = (f"""
-            DELETE public."CAD_USUARIO" 
+            DELETE from public."CAD_USUARIO" 
             WHERE id_usuario = {codigo}
         """)
         print(query)
@@ -73,20 +73,56 @@ class UserDAO(Database):
         print(query)
         return self.exec_query(query)
 
-
     def get_by_email(self, email):
         query = (f"""
             SELECT  
                 id_usuario as id
               , ds_nome as name
-              , ds_senha as senha
+              , ds_senha as password
               , ds_email as email
               , nr_phone as phone
               , dt_nascimento as birthday
               , nr_cpf as cpf
               , tp_perfil as office
               , sn_ativo as active
-            FROM public."CAD_USUARIO" WHERE ds_email = '{email}'
+            FROM public."CAD_USUARIO" 
+            WHERE ds_email = '{email}'
+        """)
+        print(query)
+        return self.exec_query(query)
+
+    def get_by_id(self, codigo):
+        query = (f"""
+            SELECT  
+                id_usuario as id
+              , ds_nome as name
+              , ds_senha as password
+              , ds_email as email
+              , nr_phone as phone
+              , dt_nascimento as birthday
+              , nr_cpf as cpf
+              , tp_perfil as office
+              , sn_ativo as active
+            FROM public."CAD_USUARIO" 
+            WHERE id_usuario = {codigo}
+        """)
+        print(query)
+        return self.exec_query(query)
+
+    def list_user(self):
+        query = (f"""
+            SELECT  
+                id_usuario as id
+              , ds_nome as name
+              , 'password' as password
+              , ds_email as email
+              , nr_phone as phone
+              , dt_nascimento as birthday
+              , nr_cpf as cpf
+              , tp_perfil as office
+              , sn_ativo as active
+            FROM public."CAD_USUARIO"
+            ORDER BY ds_nome
         """)
         print(query)
         return self.exec_query(query)

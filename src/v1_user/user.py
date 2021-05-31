@@ -41,11 +41,11 @@ class User:
                 return jsonify(dict(result="error", message="Usuário não cadastrado.")), 400
             else:
                 current_user = rs[0]
-                if current_user.get("senha") != user.get("password"):
+                if current_user.get("password") != user.get("password"):
                     return jsonify(dict(result="error", message="Senha inválida.")), 400
             token = self.auth_token(usuario=user.get('email'))
             token_refresh = self.auth_refresh(usuario=user.get('email'), token=token)
-            current_user['senha'] = 'PASSWORD'
+            current_user['password'] = 'PASSWORD'
             return jsonify({
                 "result": "success",
                 "user": current_user,
@@ -54,15 +54,26 @@ class User:
             }), 200
         return jsonify(dict(result="error", message="Dados de login não informado.")), 400
 
-    def get_user(self, id_user):
-        pass
+    def list_user(self):
+        rs = UserDAO().list_user()
+        return jsonify(rs), 200
+
+    def get_by_id(self, codigo):
+        rs = UserDAO().get_by_id(codigo=codigo)
+        if rs:
+            user = rs[0]
+            user['password'] = "password"
+            return jsonify(user), 200
+        else:
+            return jsonify(rs), 200
 
     def get_by_email(self, email):
+        print(email)
         rs = UserDAO().get_by_email(email=email)
         if rs:
             user = rs[0]
             user['password'] = "password"
-            return jsonify(rs), 200
+            return jsonify(user), 200
         else:
             return jsonify(dict(result="error")), 400
 
@@ -70,7 +81,7 @@ class User:
         user = UserDAO().get_by_email(email=email)
         if not user:
             return jsonify(dict(result="error", message="Usuário inválido.")), 400
-        if not user[0]['active'] == 1:
+        if not user[0]['active']:
             return jsonify(dict(result="error", message="Usuário bloqueado.")), 400
         if not user[0]['office'] in ('1', '2'):
             return jsonify(dict(result="error", message="Usuário não possui permissão para esta ação.")), 400
@@ -81,8 +92,9 @@ class User:
             "id": usuario,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }
-        token = jwt.encode(payload, current_app.config['SECRET_KEY'])
-        return token
+        token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
+        print(token)
+        return token.decode(encoding="UTF-8")
 
     def auth_refresh(self, usuario, token):
         payload = {
@@ -90,8 +102,8 @@ class User:
             "token": token,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(days=30)
         }
-        token = jwt.encode(payload, current_app.config['SECRET_KEY'])
-        return token
+        token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
+        return token.decode(encoding="UTF-8")
 
     def refresh_token(self, params):
         xtoken = str(params.get('refresh-token')).replace("Bearer", "").strip()

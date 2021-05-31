@@ -1,4 +1,4 @@
-CREATE DATABASE tsempreendimento
+CREATE DATABASE tsfinance
     WITH
     OWNER = postgres
     TEMPLATE = template0

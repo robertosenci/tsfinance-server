@@ -41,12 +41,12 @@ CONFIGS = {
 
 
 class Credenciais:
-    POSTGRESQL = ("DRIVER={PostgreSQL Unicode};"
+    POSTGRESQL = ("DRIVER={PostgreSQL Unicode(x64)};"
                   "DATABASE=tsfinance;"
                   "UID=postgres;"
                   "PWD=solution;"
-                  "SERVER=cashts-postgres;"
-                  "PORT=5432;")
+                  "SERVER=127.0.0.1;"
+                  "PORT=15432;")
 
 
 class Constantes:

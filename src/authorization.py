@@ -29,9 +29,8 @@ def authorization_jwt(f):
             return jsonify({"message": "Autenticação inválida", "auth": "Authorization"}), 401
         try:
             xtoken = token.replace("Bearer", "").strip()
-            print(xtoken)
+            print("TOKEN: "+xtoken)
             decode = jwt.decode(xtoken, current_app.config['SECRET_KEY'], algorithm="HS256")
-            print(decode)
             current_user = decode['id']
         except Exception as e:
             print(f'Error: {e}')

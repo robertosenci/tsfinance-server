@@ -12,6 +12,14 @@ def status():
     return f'<h1>Servidor ({blueprint.name}) ativo!</h1>'
 
 
+@blueprint.route('/me')
+@authorization_key
+@authorization_jwt
+def get_me(current_user):
+    print(f'[GET] /me')
+    return User().get_by_email(email=current_user)
+
+
 @blueprint.route('/login', methods=['POST'])
 @authorization_key
 def login():
@@ -33,9 +41,10 @@ def insert():
 @authorization_key
 @authorization_jwt
 @authorization_user
-def update():
+def update(current_user):
     print('[PUT] /user')
     params = request.get_json()
+    print(params)
     return User().update(user=params)
 
 
@@ -43,10 +52,27 @@ def update():
 @authorization_key
 @authorization_jwt
 @authorization_user
-def delete(codigo):
+def delete(current_user, codigo):
     print(f'[DELETE] /user/{codigo}')
     params = request.get_json()
     return User().delete(codigo=codigo)
+
+
+@blueprint.route('', methods=['GET'])
+@authorization_key
+@authorization_jwt
+def list_user(current_user):
+    print('[GET] /user')
+    return User().list_user()
+
+
+@blueprint.route('/<codigo>', methods=['GET'])
+@authorization_key
+@authorization_jwt
+@authorization_user
+def get_user(current_user, codigo):
+    print('[GET] /user/codigo')
+    return User().get_by_id(codigo=codigo)
 
 
 @blueprint.route('/<active>/<codigo>', methods=['PATH'])
@@ -57,15 +83,6 @@ def delete(active, codigo):
     print(f'[PATH] /user/{active}/{codigo}')
     params = request.get_json()
     return User().active(active=active, codigo=codigo)
-
-
-@blueprint.route('/me', methods=['GET'])
-@authorization_key
-@authorization_jwt
-def get_me(current_user):
-    print(f'[GET] /me')
-    print(current_user)
-    return User().delete(codigo=1)
 
 
 @blueprint.route('/refresh-token', methods=['POST'])
