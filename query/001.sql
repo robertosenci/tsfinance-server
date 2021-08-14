@@ -22,3 +22,4 @@ CREATE TABLE public."CAD_USUARIO" (
   sn_excluido BOOLEAN DEFAULT false NOT NULL,
   PRIMARY KEY(id_usuario)
 ) WITH (oids = false);
+
